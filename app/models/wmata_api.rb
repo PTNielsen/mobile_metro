@@ -45,8 +45,6 @@ class WmataApi
     rs = WmataApi.get("/StationPrediction.svc/json/GetPrediction/#{code}", query: {api_key: "#{Token}"})
     realtime_trains = rs["Trains"].map { |n| n.values_at("LocationCode", "LocationName", "Line", "Destination", "Min") }
     realtime_trains = realtime_trains.map { |train| Hash[
-      :location_code => train[0],
-      :location_name => train[1],
       :line => train[2], 
       :destination => train[3], 
       :min => train[4]

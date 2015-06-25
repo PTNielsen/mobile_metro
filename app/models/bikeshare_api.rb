@@ -23,7 +23,7 @@ class BikeshareApi
     Bikeshare.all.each do |b|
       bd = (Haversine.distance(b.bikeshare_latitude, b.bikeshare_longitude, user_latitude, user_longitude)).to_mi
       bikeshare_haversine.push({
-        :name => b.name,
+        :bikeshare_name => b.name,
         :bike_distance => bd
       })
     end
@@ -36,7 +36,6 @@ class BikeshareApi
     bike_availability = stations.map { |n| n.values_at("name", "nbBikes", "nbEmptyDocks", "latestUpdateTime") }
     bikeshare_array = bike_availability.find { |bike| bike[0] == "#{location}"}
     realtime_bike = Hash[
-      :bikeshare_name => bikeshare_array[0],
       :bikes_available => bikeshare_array[1],
       :empty_docks => bikeshare_array[2],
       :last_update => bikeshare_array[3]
@@ -48,9 +47,9 @@ class BikeshareApi
     bike_data_array = []
     b.first(3).each do |brs|
       bike_data = {}
-      bike_data[:name] = brs[:name]
+      bike_data[:bikeshare_name] = brs[:bikeshare_name]
       bike_data[:bikeshare_distance] = brs[:bike_distance]
-      bike_data[:availability] = BikeshareApi.realtime_bikes(brs[:name])
+      bike_data[:availability] = BikeshareApi.realtime_bikes(brs[:bikeshare_name])
       bike_data_array.push bike_data
     end
     bike_data_array
