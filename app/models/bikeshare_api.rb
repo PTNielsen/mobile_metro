@@ -49,7 +49,7 @@ class BikeshareApi
     b.first(3).each do |brs|
       bike_data = {}
       bike_data[:name] = brs[:name]
-      bike_data[:bd] = brs[:bike_distance]
+      bike_data[:bikeshare_distance] = brs[:bike_distance]
       bike_data[:availability] = BikeshareApi.realtime_bikes(brs[:name])
       bike_data_array.push bike_data
     end

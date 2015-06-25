@@ -13,6 +13,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'httparty'
 gem 'haversine'
+gem "figaro"
 
 gem "twitter-bootstrap-rails"
 gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms'
