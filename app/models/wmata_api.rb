@@ -3,7 +3,7 @@ require 'json'
 
 class WmataApi
 
-  Token = File.read "authkey.txt"
+  Token = ENV["wmata"]
 
   include HTTParty 
   base_uri "https://api.wmata.com"
