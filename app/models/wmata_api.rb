@@ -35,8 +35,8 @@ class WmataApi
         :line_2 =>s.line_2,
         :line_3 => s.line_3,
         :line_4 => s.line_4,
-        :station_latitude => s.station_latitude.
-        :station_longitude => s.station_longitude
+        :station_latitude => s.station_latitude,
+        :station_longitude => s.station_longitude,
         :station_distance => sd
       })
     end

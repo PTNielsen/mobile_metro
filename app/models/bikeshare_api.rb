@@ -24,8 +24,8 @@ class BikeshareApi
       bd = (Haversine.distance(b.bikeshare_latitude, b.bikeshare_longitude, user_latitude, user_longitude)).to_mi
       bikeshare_haversine.push({
         :bikeshare_name => b.name,
-        :bikeshare_latitude => b.bikeshare_latitude
-        :bikeshare_longitude => b.bikeshare_longitude
+        :bikeshare_latitude => b.bikeshare_latitude,
+        :bikeshare_longitude => b.bikeshare_longitude,
         :bike_distance => bd
       })
     end
