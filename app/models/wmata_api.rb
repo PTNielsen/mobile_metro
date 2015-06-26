@@ -35,6 +35,8 @@ class WmataApi
         :line_2 =>s.line_2,
         :line_3 => s.line_3,
         :line_4 => s.line_4,
+        :station_latitude => s.station_latitude.
+        :station_longitude => s.station_longitude
         :station_distance => sd
       })
     end
@@ -62,6 +64,8 @@ class WmataApi
       train_data[:line_2] = trs[:line_2]
       train_data[:line_3] = trs[:line_3]
       train_data[:line_4] = trs[:line_4]
+      train_data[:station_latitude] = trs[:station_latitude]
+      train_data[:station_longitude] = trs[:station_longitude]
       train_data[:station_distance] = trs[:station_distance]
       train_data[:upcoming] = WmataApi.realtime_station(trs[:station_code])
       train_data_array.push train_data

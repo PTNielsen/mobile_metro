@@ -24,6 +24,8 @@ class BikeshareApi
       bd = (Haversine.distance(b.bikeshare_latitude, b.bikeshare_longitude, user_latitude, user_longitude)).to_mi
       bikeshare_haversine.push({
         :bikeshare_name => b.name,
+        :bikeshare_latitude => b.bikeshare_latitude
+        :bikeshare_longitude => b.bikeshare_longitude
         :bike_distance => bd
       })
     end
@@ -48,6 +50,8 @@ class BikeshareApi
     b.first(3).each do |brs|
       bike_data = {}
       bike_data[:bikeshare_name] = brs[:bikeshare_name]
+      bike_data[:bikeshare_latitude] = brs[:bikeshare_latitude]
+      bike_data[:bikeshare_longitude] = brs[:bikeshare_longitude]
       bike_data[:bikeshare_distance] = brs[:bike_distance]
       bike_data[:availability] = BikeshareApi.realtime_bikes(brs[:bikeshare_name])
       bike_data_array.push bike_data
