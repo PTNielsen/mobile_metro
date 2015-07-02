@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625172221) do
+ActiveRecord::Schema.define(version: 20150702182020) do
 
   create_table "bikeshares", force: :cascade do |t|
     t.string   "name"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(version: 20150625172221) do
     t.float    "bikeshare_longitude"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "metrobuses", force: :cascade do |t|
+    t.string   "stop_name"
+    t.string   "stop_code"
+    t.float    "stop_latitude"
+    t.float    "stop_longitude"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "stations", force: :cascade do |t|

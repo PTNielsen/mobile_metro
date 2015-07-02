@@ -7,8 +7,8 @@ class BikeshareApi
   base_uri 'https://www.capitalbikeshare.com/data/stations/bikeStations.xml'
 
   def populate_bikeshare_table
-    b = BikeshareApi.get("")
-    stations = b["stations"]["station"]
+    bs = BikeshareApi.get("")
+    stations = bs["stations"]["station"]
     stations.each do |s|
       Bikeshare.where({
         :name => s["name"],

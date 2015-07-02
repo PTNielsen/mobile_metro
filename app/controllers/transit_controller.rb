@@ -5,10 +5,13 @@ class TransitController < ApplicationController
   end
 
   def index
-    wmata = WmataApi.new
+    lat, long = params[:user_latitude].to_f, params[:user_longitude].to_f
+    station = StationApi.new
     bike = BikeshareApi.new
-    @w = wmata.nearby_station_information params[:user_latitude].to_f, params[:user_longitude].to_f
-    @b = bike.nearby_bikeshare_information params[:user_latitude].to_f, params[:user_longitude].to_f
+    metrobus = MetrobusApi.new
+    @s = station.nearby_station_information lat, long
+    @b = bike.nearby_bikeshare_information lat, long
+    @m = metrobus.nearby_stop_information lat, long
   end
 
 end

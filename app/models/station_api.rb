@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 
-class WmataApi
+class StationApi
 
   Token = ENV["wmata"]
 
@@ -9,7 +9,7 @@ class WmataApi
   base_uri "https://api.wmata.com"
 
   def populate_station_table
-    st = WmataApi.get("/Rail.svc/json/jStations", query: {api_key: "#{Token}"})
+    st = StationApi.get("/Rail.svc/json/jStations", query: {api_key: "#{Token}"})
     st["Stations"].each do |s|
       Station.where({
         :station_code => s["Code"],
@@ -44,7 +44,7 @@ class WmataApi
   end
 
   def self.realtime_station code
-    rs = WmataApi.get("/StationPrediction.svc/json/GetPrediction/#{code}", query: {api_key: "#{Token}"})
+    rs = StationApi.get("/StationPrediction.svc/json/GetPrediction/#{code}", query: {api_key: "#{Token}"})
     realtime_trains = rs["Trains"].map { |n| n.values_at("LocationCode", "LocationName", "Line", "Destination", "Min") }
     realtime_trains = realtime_trains.map { |train| Hash[
       :line => train[2], 
@@ -55,7 +55,7 @@ class WmataApi
   end
 
   def nearby_station_information user_latitude, user_longitude
-    s = WmataApi.stations_by_distance user_latitude, user_longitude
+    s = StationApi.stations_by_distance user_latitude, user_longitude
     train_data_array = []
     s.first(3).each do |trs|
       train_data = {}
@@ -67,7 +67,7 @@ class WmataApi
       train_data[:station_latitude] = trs[:station_latitude]
       train_data[:station_longitude] = trs[:station_longitude]
       train_data[:station_distance] = trs[:station_distance]
-      train_data[:upcoming] = WmataApi.realtime_station(trs[:station_code])
+      train_data[:upcoming_trains] = StationApi.realtime_station(trs[:station_code])
       train_data_array.push train_data
     end
     train_data_array
