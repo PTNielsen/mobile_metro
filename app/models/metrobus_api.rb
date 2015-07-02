@@ -35,6 +35,17 @@ class MetrobusApi
     stop_haversine.sort_by { |m| m[:stop_distance] }
   end
 
+  def self.realtime_stop code
+    rb = MetrobusApi.get("/NextBusService.svc/json/jPredictions", query: {api_key: "#{Token}", StopID: "#{code}"})
+    realtime_buses = rb["Predictions"].map { |n| n.values_at("RouteID", "DirectionText", "Minutes") }
+    realtime_buses = realtime_buses.map { |bus| Hash[
+      :route_id => bus[0], 
+      :direction_text => bus[1], 
+      :min => bus[2]
+      ] }
+    realtime_buses.first(5)
+  end  
+
   def nearby_stop_information user_latitude, user_longitude
     metrobus = MetrobusApi.stops_by_distance user_latitude, user_longitude
     bus_data_array = []
@@ -44,7 +55,7 @@ class MetrobusApi
       bus_data[:stop_latitude] = mb[:stop_latitude]
       bus_data[:stop_longitude] = mb[:stop_longitude]
       bus_data[:stop_distance] = mb[:stop_distance]
-      # bus_data[:upcoming_buses] = MetrobusApi.realtime_stop(mb[:stop_code])
+      bus_data[:upcoming_buses] = MetrobusApi.realtime_stop(mb[:stop_code])
       bus_data_array.push bus_data
     end
     bus_data_array
