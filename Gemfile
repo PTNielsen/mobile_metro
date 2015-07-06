@@ -22,12 +22,14 @@ group :development, :test do
   gem 'letter_opener'
   gem 'better_errors'
   gem 'pry-rails'
-  gem 'byebug'
-  gem 'web-console', '~> 2.0'
-  gem 'spring'
+  # gem 'byebug'
+  # gem 'web-console', '~> 2.0'
+  # gem 'spring'
   gem 'sqlite3'
+  gem 'did_you_mean'
 end
 
 group :production do
   gem 'pg'
+  gem 'rails_12factor'
 end
