@@ -11,8 +11,8 @@ class BikeshareApi
     stations = bs["stations"]["station"]
     stations.each do |s|
       Bikeshare.where({
-        :name => s["name"],
-        :bikeshare_latitude => s["lat"],
+        :name                => s["name"],
+        :bikeshare_latitude  => s["lat"],
         :bikeshare_longitude => s["long"]
         }).first_or_create!
     end
@@ -23,10 +23,10 @@ class BikeshareApi
     Bikeshare.all.each do |b|
       bd = (Haversine.distance(b.bikeshare_latitude, b.bikeshare_longitude, user_latitude, user_longitude)).to_mi
       bikeshare_haversine.push({
-        :bikeshare_name => b.name,
-        :bikeshare_latitude => b.bikeshare_latitude,
+        :bikeshare_name      => b.name,
+        :bikeshare_latitude  => b.bikeshare_latitude,
         :bikeshare_longitude => b.bikeshare_longitude,
-        :bike_distance => bd
+        :bike_distance       => bd
       })
     end
     bikeshare_haversine.sort_by { |i| i[:bike_distance] }
@@ -39,8 +39,8 @@ class BikeshareApi
     bikeshare_array = bike_availability.find { |bike| bike[0] == "#{location}"}
     realtime_bike = Hash[
       :bikes_available => bikeshare_array[1],
-      :empty_docks => bikeshare_array[2],
-      :last_update => bikeshare_array[3]
+      :empty_docks     => bikeshare_array[2],
+      :last_update     => bikeshare_array[3]
     ]
   end
 
@@ -49,11 +49,11 @@ class BikeshareApi
     bike_data_array = []
     b.first(3).each do |brs|
       bike_data = {}
-      bike_data[:bikeshare_name] = brs[:bikeshare_name]
-      bike_data[:bikeshare_latitude] = brs[:bikeshare_latitude]
+      bike_data[:bikeshare_name]      = brs[:bikeshare_name]
+      bike_data[:bikeshare_latitude]  = brs[:bikeshare_latitude]
       bike_data[:bikeshare_longitude] = brs[:bikeshare_longitude]
-      bike_data[:bikeshare_distance] = brs[:bike_distance]
-      bike_data[:availability] = BikeshareApi.realtime_bikes(brs[:bikeshare_name])
+      bike_data[:bikeshare_distance]  = brs[:bike_distance]
+      bike_data[:availability]        = BikeshareApi.realtime_bikes(brs[:bikeshare_name])
       bike_data_array.push bike_data
     end
     bike_data_array

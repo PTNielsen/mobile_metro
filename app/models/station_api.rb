@@ -1,5 +1,4 @@
 require 'httparty'
-require 'json'
 
 class StationApi
 
@@ -12,13 +11,13 @@ class StationApi
     st = StationApi.get("/Rail.svc/json/jStations", query: {api_key: "#{Token}"})
     st["Stations"].each do |s|
       Station.where({
-        :station_code => s["Code"],
-        :station_name => s["Name"],
-        :line_1 => s["LineCode1"],
-        :line_2 => s["LineCode2"],
-        :line_3 => s["LineCode3"],
-        :line_4 => s["LineCode4"],
-        :station_latitude => s["Lat"],
+        :station_code      => s["Code"],
+        :station_name      => s["Name"],
+        :line_1            => s["LineCode1"],
+        :line_2            => s["LineCode2"],
+        :line_3            => s["LineCode3"],
+        :line_4            => s["LineCode4"],
+        :station_latitude  => s["Lat"],
         :station_longitude => s["Lon"]
       }).first_or_create!
     end
@@ -29,15 +28,15 @@ class StationApi
     Station.all.each do |s|
       sd = (Haversine.distance(s.station_latitude, s.station_longitude, user_latitude, user_longitude)).to_mi
       station_haversine.push({
-        :station_code => s.station_code,
-        :station_name => s.station_name,
-        :line_1 => s.line_1,
-        :line_2 =>s.line_2,
-        :line_3 => s.line_3,
-        :line_4 => s.line_4,
-        :station_latitude => s.station_latitude,
+        :station_code      => s.station_code,
+        :station_name      => s.station_name,
+        :line_1            => s.line_1,
+        :line_2            =>s.line_2,
+        :line_3            => s.line_3,
+        :line_4            => s.line_4,
+        :station_latitude  => s.station_latitude,
         :station_longitude => s.station_longitude,
-        :station_distance => sd
+        :station_distance  => sd
       })
     end
     station_haversine.sort_by { |s| s[:station_distance] }
@@ -59,15 +58,15 @@ class StationApi
     train_data_array = []
     s.first(3).each do |trs|
       train_data = {}
-      train_data[:station_name] = trs[:station_name]
-      train_data[:line_1] = trs[:line_1]
-      train_data[:line_2] = trs[:line_2]
-      train_data[:line_3] = trs[:line_3]
-      train_data[:line_4] = trs[:line_4]
-      train_data[:station_latitude] = trs[:station_latitude]
+      train_data[:station_name]      = trs[:station_name]
+      train_data[:line_1]            = trs[:line_1]
+      train_data[:line_2]            = trs[:line_2]
+      train_data[:line_3]            = trs[:line_3]
+      train_data[:line_4]            = trs[:line_4]
+      train_data[:station_latitude]  = trs[:station_latitude]
       train_data[:station_longitude] = trs[:station_longitude]
-      train_data[:station_distance] = trs[:station_distance]
-      train_data[:upcoming_trains] = StationApi.realtime_station(trs[:station_code])
+      train_data[:station_distance]  = trs[:station_distance]
+      train_data[:upcoming_trains]   = StationApi.realtime_station(trs[:station_code])
       train_data_array.push train_data
     end
     train_data_array
