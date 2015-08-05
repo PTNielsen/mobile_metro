@@ -1,5 +1,3 @@
 The live version of this app can be found at mobile-metro.herokuapp.com.
 
-Using the WMATA and Capital Bikeshare API's, optional geolocation parameters (latitude and longitude) are taken and used to find the nearest three Metro and Bikeshare Stations in the DC Metro Area with realtime information on the upcoming trains and number of available bikes/docks respectively.
-
-An extension of the WMATA API to include realtime Metrobus data is in progress and will be added to the build once complete.
+Using the WMATA and Capital Bikeshare API's, optional geolocation parameters (latitude and longitude) are taken and used to find the nearest three Metro, Metrobus, and Bikeshare Stations in the DC Metro Area with realtime information on the upcoming trains, upcoming buses, and number of available bikes/docks respectively.
